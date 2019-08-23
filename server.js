@@ -1,6 +1,6 @@
 var express = require("express");
 var app = express("./models");
-var PORT = process.env.PORT || 8080;
+// var PORT = process.env.PORT || 8080;
 
 
 // Serve static content for the app from the "public" directory in the application directory.
@@ -12,13 +12,18 @@ app.use(express.json());
 
 var exphbs = require("express-handlebars");
 
-app.engine("handlebars", exphbs({ defaultLayout: "main" }));
+app.engine("handlebars", exphbs({ 
+  defaultLayout: "main" }));
+
 app.set("view engine", "handlebars");
 
 var routes = require("./controllers/burgersController.js");
 
 app.use(routes);
 
-app.listen(PORT, function() {
-  console.log("Listening on port:%s", PORT);
+var PORT = process.env.PORT || 3000;
+debugger.sequelize.sync().then(function() {
+  app.listen(PORT, function() {
+    console.log("App now listneing on port:", PORT);
+  });
 });
